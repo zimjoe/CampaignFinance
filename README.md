@@ -1,6 +1,9 @@
 # CampaignFinance
 
+This is just a small project to load the Virginia Campaign Finance data to a CosmoDB on Azure.  I will then play with different structures to optimize search.
 
+
+## Setup
 // Create the solution file using your Namespace
 dotnet new sln -n Aeveco.CampaignFinance
 // lets create the projects
