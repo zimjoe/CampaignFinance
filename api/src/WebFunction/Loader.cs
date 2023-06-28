@@ -1,4 +1,6 @@
 using System;
+using System.Configuration;
+using Microsoft.Extensions.Configuration;
 using Aeveco.CampaignFinance.Application.Common.Interfaces;
 using Aeveco.CampaignFinance.Infrastructure.Persistance;
 using Microsoft.Azure.Functions.Worker;
@@ -25,6 +27,7 @@ namespace WebFunction
         [Function("Loader")]
         public void Run([TimerTrigger("0 */5 * * * *")] MyInfo myTimer)
         {
+            //Configuration.Reload();
             _logger.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
             _logger.LogInformation($"Next timer schedule at: {myTimer.ScheduleStatus.Next}");
         }

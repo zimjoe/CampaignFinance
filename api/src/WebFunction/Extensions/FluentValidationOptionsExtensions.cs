@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System;
@@ -13,7 +14,7 @@ namespace Aeveco.CampaignFinance.Application.Validators;
 /// </summary>
 public static class FluentValidationOptionsExtensions
 {
-    public static OptionsBuilder<TOptions> AddWithValidation<TOptions, TValidator>(
+    public static OptionsBuilder<TOptions> AddConfigurationWithValidation<TOptions, TValidator>(
         this IServiceCollection services,
         string configurationSection)
     where TOptions : class

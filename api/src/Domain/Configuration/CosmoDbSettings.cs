@@ -8,7 +8,7 @@ namespace Aeveco.CampaignFinance.Domain.Configuration
 {
     public class CosmoDBSettings
     {
-        public const string ConfigName = "CosmoDB";
+        public const string ConfigName = "CosmoDBSettings";
         public required string AccountEndPoint { get; set; }
         public required string AccountKey { get; set; }
         public required string DatabaseName { get; set; }
