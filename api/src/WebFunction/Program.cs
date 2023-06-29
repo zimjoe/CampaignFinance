@@ -20,27 +20,18 @@ var host = new HostBuilder()
     .ConfigureFunctionsWorkerDefaults()
     .ConfigureAppConfiguration(c =>
     {
+        // get the keyvault from the configuration. On Azure this will be a setting, locally it will be in the local.settings.json file
 #if DEBUG
         c.AddJsonFile("local.settings.json", optional: true, reloadOnChange: true);
 #endif
-        // get the keyvault from the configuration. On Azure this will be a setting, locally it will be in the local.settings.json file
-        var builtConfig = c.Build();
-        var keyVaultUri = builtConfig?["KeyVaultUri"];
-        if (!string.IsNullOrWhiteSpace(keyVaultUri))
-        {
-            var secretClient = new SecretClient(new Uri(keyVaultUri), new DefaultAzureCredential());
-            AzureKeyVaultConfigurationOptions options = new(){
-                Manager = new KeyVaultSecretManager(),
-                ReloadInterval = TimeSpan.FromSeconds(30)
-            };
-            c.AddAzureKeyVault(secretClient, options);
-        }
+        // this refreshses the keyvault every 60 seconds and updates the configuration
+        c.AddAzureKeyVaultToConfiurationWithRefresh("KeyVaultUri", 60);
+        
         c.AddEnvironmentVariables();
     })
     .ConfigureServices(s =>
     {
         s.AddConfigurationWithValidation<CosmoDBSettings, CosmoDBSettingsValidator>(CosmoDBSettings.ConfigName);
-        //s.AddSingleton<IConfiguration>(Configuration);
         s.AddHttpClient();
         s.AddDbContext<VirginiaContext>();
         s.AddTransient<ICvsFileReader, CsvFileReader>();

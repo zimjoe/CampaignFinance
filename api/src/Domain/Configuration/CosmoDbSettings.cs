@@ -13,5 +13,7 @@ namespace Aeveco.CampaignFinance.Domain.Configuration
         public required string AccountKey { get; set; }
         public required string DatabaseName { get; set; }
         public string? ContainerName { get; set; }
+        public string? ChangingValue { get; set; }
+
     }
 }
